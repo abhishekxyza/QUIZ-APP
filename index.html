@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BrainBurst - Ultimate Quiz Arena</title>
+  <meta name="description" content="Test your knowledge with BrainBurst, a premium interactive multiple-choice quiz application. Challenge yourself across multiple categories or try a random quiz!">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="background-decorations">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
+
+  <div class="app-container">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="logo" id="header-logo">
+        <i class="fa-solid fa-brain logo-icon"></i>
+        <span>BrainBurst</span>
+      </div>
+      <button class="theme-toggle" id="theme-toggle-btn" aria-label="Toggle dark mode">
+        <i class="fa-solid fa-moon"></i>
+      </button>
+    </header>
+
+    <main class="main-content">
+      <!-- Home Screen -->
+      <section id="home-screen" class="screen active">
+        <div class="hero-section">
+          <h1>Level Up Your Knowledge</h1>
+          <p class="hero-subtitle">Choose a category or jump straight in with a random selection to test your intellect.</p>
+          
+          <button class="btn btn-primary btn-large" id="start-random-quiz-btn">
+            <i class="fa-solid fa-shuffle"></i> Start Random Quiz
+          </button>
+        </div>
+
+        <div class="categories-section">
+          <h2>Select a Topic</h2>
+          <div class="quiz-grid" id="quiz-categories-grid">
+            <!-- Dynamic Category Cards will be injected here -->
+          </div>
+        </div>
+      </section>
+
+      <!-- Quiz Screen -->
+      <section id="quiz-screen" class="screen">
+        <div class="quiz-card">
+          <!-- Quiz Header Status -->
+          <div class="quiz-header">
+            <button class="btn-back" id="quit-quiz-btn" title="Quit Quiz">
+              <i class="fa-solid fa-arrow-left"></i> Exit
+            </button>
+            <span class="quiz-category-tag" id="current-quiz-category">Category</span>
+            <div class="score-pill">
+              Score: <span id="current-live-score">0</span>
+            </div>
+          </div>
+
+          <!-- Progress bar -->
+          <div class="progress-container">
+            <div class="progress-bar-fill" id="quiz-progress-bar" style="width: 0%;"></div>
+          </div>
+          <div class="question-meta">
+            Question <span id="current-question-num">1</span> of <span id="total-questions-num">10</span>
+          </div>
+
+          <!-- Question Display -->
+          <div class="question-container">
+            <h2 id="quiz-question-text">Loading question...</h2>
+          </div>
+
+          <!-- Choices List -->
+          <div class="options-container" id="quiz-options-list">
+            <!-- Options dynamically loaded here -->
+          </div>
+
+          <!-- Quiz Footer Navigation -->
+          <div class="quiz-footer">
+            <button class="btn btn-secondary" id="submit-answer-btn" disabled>
+              Submit Answer
+            </button>
+            <button class="btn btn-primary hidden" id="next-question-btn">
+              Next Question <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Result Screen -->
+      <section id="result-screen" class="screen">
+        <div class="result-card">
+          <div class="result-celebration">
+            <div class="trophy-wrapper">
+              <i class="fa-solid fa-trophy trophy-icon"></i>
+            </div>
+            <h2 id="result-greeting">Quiz Completed!</h2>
+            <p id="result-subgreeting">Here is how you performed:</p>
+          </div>
+
+          <!-- Score Circle -->
+          <div class="score-circle-container">
+            <svg class="score-ring" width="160" height="160">
+              <circle class="score-ring-bg" cx="80" cy="80" r="70" stroke-width="12"></circle>
+              <circle class="score-ring-progress" id="score-ring-fill" cx="80" cy="80" r="70" stroke-width="12" stroke-dasharray="440" stroke-dashoffset="440"></circle>
+            </svg>
+            <div class="score-text-overlay">
+              <span class="score-percentage" id="result-score-percent">0%</span>
+              <span class="score-fraction" id="result-score-fraction">0 / 0</span>
+            </div>
+          </div>
+
+          <!-- Stat Cards -->
+          <div class="stats-row">
+            <div class="stat-card correct">
+              <span class="stat-number" id="stats-correct">0</span>
+              <span class="stat-label">Correct</span>
+            </div>
+            <div class="stat-card incorrect">
+              <span class="stat-number" id="stats-incorrect">0</span>
+              <span class="stat-label">Incorrect</span>
+            </div>
+          </div>
+
+          <!-- Review Panel Toggle -->
+          <div class="review-toggle-container">
+            <button class="btn btn-outline" id="toggle-review-btn">
+              <i class="fa-solid fa-list-check"></i> Show Detailed Review
+            </button>
+          </div>
+
+          <!-- Review Breakdown -->
+          <div class="review-breakdown hidden" id="review-breakdown-panel">
+            <h3>Question Review</h3>
+            <div class="review-list" id="review-questions-list">
+              <!-- Item lists injected here -->
+            </div>
+          </div>
+
+          <!-- Actions -->
+          <div class="result-actions">
+            <button class="btn btn-secondary" id="retry-quiz-btn">
+              <i class="fa-solid fa-rotate-left"></i> Try Again
+            </button>
+            <button class="btn btn-primary" id="go-home-btn">
+              <i class="fa-solid fa-house"></i> Home
+            </button>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Application Logic -->
+  <script src="app.js"></script>
+</body>
+</html>
